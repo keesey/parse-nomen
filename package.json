@@ -1,0 +1,50 @@
+{
+	"author": {
+		"email": "keesey@gmail.com",
+		"name": "T. Michael Keesey",
+		"url": "http://tmkeesey.net"
+	},
+	"bugs": {
+		"url": "https://github.com/keesey/parse-nomen/issues"
+	},
+	"description": "TypeScript/JavaScript function for parsing biological names.",
+	"devDependencies": {
+		"chai": "^4.1.2",
+		"mocha": "^5.0.5",
+		"typescript": "^2.7.2"
+	},
+	"homepage": "https://github.com/keesey/parse-nomen#readme",
+	"keywords": [
+		"binomial",
+		"biological",
+		"biology",
+        "genus",
+		"javascript",
+        "name",
+        "nomen",
+        "nomenclature",
+        "nomina",
+        "species",
+        "subspecies",
+		"systematics",
+		"parser",
+		"taxa",
+		"taxon",
+		"taxonomic",
+		"taxonomy",
+		"trinomial",
+		"typescript"
+	],
+	"license": "MIT",
+	"main": "dist/index.js",
+	"name": "parse-nomen",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/keesey/parse-nomen.git"
+	},
+	"scripts": {
+		"build": "tsc",
+		"test": "mocha --reporter spec"
+	},
+	"version": "1.0.0"
+}
