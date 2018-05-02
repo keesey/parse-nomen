@@ -8,121 +8,121 @@ interface WordClass {
 	pattern: RegExp;
 	style: string;
 }
-const INITIAL_WORD_CLASSES = ['praenomen', 'praenomenAbbr', 'vernacular'];
+const INITIAL_WORD_CLASSES = ["praenomen", "praenomenAbbr", "vernacular"];
 const SUPRAGENERIC_NAME = /^[A-ZÀ-ÖØ-ÞŒ][a-zß-öø-ÿœ]*(\-[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ])?[a-zß-öø-ÿœ]+$/;
 const WORD_CLASS_DICT: { [name: string]: WordClass } = {
 	author: {
 		antipattern: /^(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?$/i,
-		next: ['authorOperator', 'citationOperator', 'subspecificRank', 'incertae', 'year', 'date', 'month', 'author'],
-		pattern: /^[\(\[{]?[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ\'\!\*]/,
-		style: 'citation'
+		next: ["authorOperator", "citationOperator", "subspecificRank", "incertae", "year", "date", "month", "author"],
+		pattern: /^[\(\[{]?[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ\"\!\*]/,
+		style: "citation"
 	},
 	authorOperator: {
-		next: ['author'],
+		next: ["author"],
 		pattern: /^(&|and|et)$/i,
-		style: 'citation'
+		style: "citation"
 	},
 	citationOperator: {
-		next: ['author', 'year', 'month', 'day'],
+		next: ["author", "year", "month", "day"],
 		pattern: /^(ex|in|vide|non)$/i,
-		style: 'citation'
+		style: "citation"
 	},
 	date: {
-		next: ['month', 'year', 'citationOperator', 'incertae', 'subspecificRank', 'author'],
+		next: ["month", "year", "citationOperator", "incertae", "subspecificRank", "author"],
 		pattern: /^[\(\[{]?\d\d?[\)\]}]?\.?$/i,
-		style: 'citation'
+		style: "citation"
 	},
 	incertae: {
-		next: ['incertaeFollower'],
+		next: ["incertaeFollower"],
 		pattern: /^incertae|indet\.?$/i,
-		style: 'comment'
+		style: "comment"
 	},
 	incertaeFollower: {
-		next: ['incertaeFollower'],
+		next: ["incertaeFollower"],
 		pattern: /^.+$/,
-		style: 'comment'
+		style: "comment"
 	},
 	month: {
-		next: ['date', 'year', 'citationOperator', 'incertae', 'subspecificRank', 'author'],
+		next: ["date", "year", "citationOperator", "incertae", "subspecificRank", "author"],
 		pattern: /^\(?(Jan(\.|uary)?|Feb(\.|ruary)?|Mar(\.|ch)?|Apr(\.|il)?|May|Jun(\.|e)?|Jul(\.|y)?|Aug(\.|ust)?|Sep(\.|t(\.)?|ember)?|Oct(\.|ober)?|Nov(\.|ember?)|Dec(\.|ember)?)$/i,
-		style: 'citation'
+		style: "citation"
 	},
 	operator: {
-		next: ['praenomen', 'praenomenAbbr'],
+		next: ["praenomen", "praenomenAbbr"],
 		pattern: /^(\+|←)$/,
-		style: 'operator'
+		style: "operator"
 	},
 	praenomen: {
-		next: ['operator', 'citationOperator', 'incertae', 'supragenericRank', 'subgenericRank', 'specificOperator', 'species', 'subgenus', 'speciesGroup', 'author'],
+		next: ["operator", "citationOperator", "incertae", "supragenericRank", "subgenericRank", "specificOperator", "species", "subgenus", "speciesGroup", "author"],
 		pattern: SUPRAGENERIC_NAME,
-		style: 'scientific'
+		style: "scientific"
 	},
 	praenomenAbbr: {
-		next: ['species', 'subgenus', 'speciesGroup'],
+		next: ["species", "subgenus", "speciesGroup"],
 		pattern: /^[A-ZÀ-ÖØ-ÞŒ]\.$/,
-		style: 'scientific'
+		style: "scientific"
 	},
 	species: {
 		antipattern: /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/,
-		next: ['operator', 'citationOperator', 'year', 'month', 'date', 'subspecies', 'subspecificOperator', 'subspecificRank', 'author'],
+		next: ["operator", "citationOperator", "year", "month", "date", "subspecies", "subspecificOperator", "subspecificRank", "author"],
 		pattern: /^(sp\.(\s+innom\.)?|[a-zß-öø-ÿœ]+\-?[a-zß-öø-ÿœ]+)$/,
-		style: 'scientific'
+		style: "scientific"
 	},
 	speciesGroup: {
-		next: ['operator', 'citationOperator', 'year', 'month', 'date', 'species', 'specificOperator', 'author'],
+		next: ["operator", "citationOperator", "year", "month", "date", "species", "specificOperator", "author"],
 		pattern: /^\([a-zß-öø-ÿœ]+\-?[a-zß-öø-ÿœ]+\)$/,
-		style: 'scientific'
+		style: "scientific"
 	},
 	specificOperator: {
-		next: ['species'],
+		next: ["species"],
 		pattern: /^(cf\.|aff\.)$/,
-		style: 'comment'
+		style: "comment"
 	},
 	subgenericName: {
-		next: ['year', 'citationOperator', 'month', 'date', 'species', 'specificOperator', 'author'],
+		next: ["year", "citationOperator", "month", "date", "species", "specificOperator", "author"],
 		pattern: SUPRAGENERIC_NAME,
-		style: 'scientific'
+		style: "scientific"
 	},
 	subgenericRank: {
-		next: ['subgenericName'],
+		next: ["subgenericName"],
 		pattern: /^(\[\()?(subg(\.|en(\.|us)?)?|(sub)?sect(\.|ion?)?|(sub)?ser(\.|ies)?)(\]\))?$/i,
-		style: 'rank'
+		style: "rank"
 	},
 	subgenus: {
-		next: ['operator', 'citationOperator', 'year', 'month', 'date', 'species', 'specificOperator', 'author'],
+		next: ["operator", "citationOperator", "year", "month", "date", "species", "specificOperator", "author"],
 		pattern: /^\([A-ZÀ-ÖØ-ÞŒ][a-zß-öø-ÿœ]*(\-[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ])?[a-zß-öø-ÿœ]+\)$/,
-		style: 'scientific'
+		style: "scientific"
 	},
 	subspecies: {
 		antipattern: /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/,
-		next: ['operator', 'citationOperator', 'subspecificRank', 'year', 'month', 'date', 'author'],
+		next: ["operator", "citationOperator", "subspecificRank", "year", "month", "date", "author"],
 		pattern: /^(ssp\.(\s+innom\.)?|[a-zß-öø-ÿœ]+\-?[a-zß-öø-ÿœ]+)$/,
-		style: 'scientific'
+		style: "scientific"
 	},
 	subspecificOperator: {
-		next: ['subspecies'],
+		next: ["subspecies"],
 		pattern: /^(cf\.|aff\.)$/,
-		style: 'comment'
+		style: "comment"
 	},
 	subspecificRank: {
-		next: ['subspecies'],
+		next: ["subspecies"],
 		pattern: /^(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?$/i,
-		style: 'rank'
+		style: "rank"
 	},
 	supragenericRank: {
-		next: ['year', 'month', 'date', 'incertae', 'author'],
+		next: ["year", "month", "date", "incertae", "author"],
 		pattern: /^(\[\()?((sub|sup(ra|er)|infra)?phyl(\.|um)|(sub|sup(ra|er)|infra)?div(\.|ision)|(sub|sup(ra|er)|infra)?cl(\.|ass(is)?)|(sub|sup(ra|er)|infra)?ord(\.|o|er)|(sub|sup(ra|er))?fam(\.|il(ia|y))|(sub)?tr(\.|ib(e|us))|gen(\.|us))(\]\))?$/i,
-		style: 'rank'
+		style: "rank"
 	},
 	vernacular: {
-		next: ['vernacular'],
+		next: ["vernacular"],
 		pattern: /^.+$/i,
-		style: 'vernacular'
+		style: "vernacular"
 	},
 	year: {
-		next: ['month', 'citationOperator', 'incertae', 'subspecificRank', 'author'],
+		next: ["month", "citationOperator", "incertae", "subspecificRank", "author"],
 		pattern: /^[\(\[{]?\d{4}[\)\]}]?\.?$/i,
-		style: 'citation'
+		style: "citation"
 	}
 };
 export function parseNomen(s: string): NomenPart[] {
@@ -165,8 +165,8 @@ export function parseNomen(s: string): NomenPart[] {
 		}
 		return parts;
 	}
-	if (typeof s !== 'string') {
-		throw new Error('Not a string.');
+	if (typeof s !== "string") {
+		throw new Error("Not a string.");
 	}
 	const words = s
 		.trim()
