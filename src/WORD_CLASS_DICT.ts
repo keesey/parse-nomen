@@ -2,6 +2,24 @@ import { NomenPartClass } from "./NomenPartClass";
 import { SUPRAGENERIC_NAME_REGEX } from "./SUPRAGENERIC_NAME_REGEX"
 import { WordClass } from "./WordClass";
 import { WordClassName } from "./WordClassName";
+const DATE_CLASSES = [
+	WordClassName.YEAR,
+	WordClassName.MONTH,
+	WordClassName.DATE,
+];
+const POST_SUBGENUS_CLASSES = [
+	WordClassName.SPECIES,
+	WordClassName.SPECIES_GROUP,
+];
+const POST_GENUS_CLASSES = [
+	...POST_SUBGENUS_CLASSES,
+	WordClassName.SUBGENUS,
+];
+const PRIMARY_OPERATORS = [
+	WordClassName.OPERATOR,
+	WordClassName.CITATION_OPERATOR,
+	WordClassName.INCERTAE,
+];
 export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 	[WordClassName.AUTHOR]: {
 		antipattern: /^(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?$/i,
@@ -11,9 +29,7 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 			WordClassName.CITATION_OPERATOR,
 			WordClassName.SUBSPECIFIC_RANK,
 			WordClassName.INCERTAE,
-			WordClassName.YEAR,
-			WordClassName.DATE,
-			WordClassName.MONTH,
+			...DATE_CLASSES,
 			WordClassName.AUTHOR,
 		],
 		pattern: /^[\(\[{]?[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ\"\!\*]/,
@@ -29,9 +45,7 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 		class: NomenPartClass.CITATION,
 		next: [
 			WordClassName.AUTHOR,
-			WordClassName.YEAR,
-			WordClassName.MONTH,
-			WordClassName.DATE,
+			...DATE_CLASSES,
 		],
 		pattern: /^(ex|in|vide|non)$/i,
 	},
@@ -40,8 +54,7 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 		next: [
 			WordClassName.MONTH,
 			WordClassName.YEAR,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
+			...PRIMARY_OPERATORS,
 			WordClassName.SUBSPECIFIC_RANK,
 			WordClassName.AUTHOR,
 		],
@@ -84,38 +97,26 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 	[WordClassName.PRAENOMEN]: {
 		class: NomenPartClass.SCIENTIFIC,
 		next: [
-			WordClassName.OPERATOR,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
+			...PRIMARY_OPERATORS,
 			WordClassName.SUPRAGENERIC_RANK,
 			WordClassName.SUBGENERIC_RANK,
 			WordClassName.SPECIFIC_OPERATOR,
-			WordClassName.SPECIES,
-			WordClassName.SUBGENUS,
-			WordClassName.SPECIES_GROUP,
+			...POST_GENUS_CLASSES,
 			WordClassName.AUTHOR,
 		],
 		pattern: SUPRAGENERIC_NAME_REGEX,
 	},
 	[WordClassName.PRAENOMEN_ABBR]: {
 		class: NomenPartClass.SCIENTIFIC,
-		next: [
-			WordClassName.SPECIES,
-			WordClassName.SUBGENUS,
-			WordClassName.SPECIES_GROUP,
-		],
+		next: POST_GENUS_CLASSES,
 		pattern: /^[A-ZÀ-ÖØ-ÞŒ]\.$/,
 	},
 	[WordClassName.SPECIES]: {
 		antipattern: /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/,
 		class: NomenPartClass.SCIENTIFIC,
 		next: [
-			WordClassName.OPERATOR,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
-			WordClassName.YEAR,
-			WordClassName.MONTH,
-			WordClassName.DATE,
+			...PRIMARY_OPERATORS,
+			...DATE_CLASSES,
 			WordClassName.SUBSPECIES,
 			WordClassName.SUBSPECIFIC_OPERATOR,
 			WordClassName.SUBSPECIFIC_RANK,
@@ -126,12 +127,8 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 	[WordClassName.SPECIES_GROUP]: {
 		class: NomenPartClass.SCIENTIFIC,
 		next: [
-			WordClassName.OPERATOR,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
-			WordClassName.YEAR,
-			WordClassName.MONTH,
-			WordClassName.DATE,
+			...PRIMARY_OPERATORS,
+			...DATE_CLASSES,
 			WordClassName.SPECIES,
 			WordClassName.SPECIFIC_OPERATOR,
 			WordClassName.AUTHOR,
@@ -148,12 +145,10 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 	[WordClassName.SUBGENERIC_NAME]: {
 		class: NomenPartClass.SCIENTIFIC,
 		next: [
-			WordClassName.YEAR,
+			...DATE_CLASSES,
 			WordClassName.CITATION_OPERATOR,
 			WordClassName.INCERTAE,
-			WordClassName.MONTH,
-			WordClassName.DATE,
-			WordClassName.SPECIES,
+			...POST_SUBGENUS_CLASSES,
 			WordClassName.SPECIFIC_OPERATOR,
 			WordClassName.AUTHOR,
 		],
@@ -169,13 +164,9 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 	[WordClassName.SUBGENUS]: {
 		class: NomenPartClass.SCIENTIFIC,
 		next: [
-			WordClassName.OPERATOR,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
-			WordClassName.YEAR,
-			WordClassName.MONTH,
-			WordClassName.DATE,
-			WordClassName.SPECIES,
+			...PRIMARY_OPERATORS,
+			...DATE_CLASSES,
+			...POST_SUBGENUS_CLASSES,
 			WordClassName.SPECIFIC_OPERATOR,
 			WordClassName.AUTHOR,
 		],
@@ -185,13 +176,9 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 		antipattern: /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/,
 		class: NomenPartClass.SCIENTIFIC,
 		next: [
-			WordClassName.OPERATOR,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
+			...PRIMARY_OPERATORS,
 			WordClassName.SUBSPECIFIC_RANK,
-			WordClassName.YEAR,
-			WordClassName.MONTH,
-			WordClassName.DATE,
+			...DATE_CLASSES,
 			WordClassName.AUTHOR,
 		],
 		pattern: /^(ssp\.(\s+innom\.)?|[a-zß-öø-ÿœ]+\-?[a-zß-öø-ÿœ]+)$/,
@@ -213,9 +200,7 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 	[WordClassName.SUPRAGENERIC_RANK]: {
 		class: NomenPartClass.RANK,
 		next: [
-			WordClassName.YEAR,
-			WordClassName.MONTH,
-			WordClassName.DATE,
+			...DATE_CLASSES,
 			WordClassName.INCERTAE,
 			WordClassName.AUTHOR,
 		],
@@ -232,9 +217,9 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
 		class: NomenPartClass.CITATION,
 		next: [
 			WordClassName.MONTH,
-			WordClassName.CITATION_OPERATOR,
-			WordClassName.INCERTAE,
+			...PRIMARY_OPERATORS,
 			WordClassName.SUBSPECIFIC_RANK,
+			WordClassName.SUBGENERIC_RANK,
 			WordClassName.AUTHOR,
 		],
 		pattern: /^[\(\[{]?\d{4}[\)\]}]?\.?$/i,
