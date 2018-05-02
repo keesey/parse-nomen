@@ -1,5 +1,3 @@
-export interface NomenPart {
-    class: string;
-    text: string;
-}
-export declare function parseNomen(s: string): NomenPart[];
+export * from "./src/Style";
+export * from "./src/NomenPart";
+export * from "./src/parseNomen";
