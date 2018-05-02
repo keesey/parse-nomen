@@ -28,6 +28,26 @@ describe("parseNomen()", () => {
             class: "scientific",
             text: "Homo (Homo)",
         }]);
+        test("Homo subgenus Homo", [{
+            class: "scientific",
+            text: "Homo",
+        }, {
+            class: "rank",
+            text: "subgenus",
+        }, {
+            class: "scientific",
+            text: "Homo",
+        }]);
+        test("Homo subg. Homo", [{
+            class: "scientific",
+            text: "Homo",
+        }, {
+            class: "rank",
+            text: "subg.",
+        }, {
+            class: "scientific",
+            text: "Homo",
+        }]);
         test("Homo (sapiens)", [{
             class: "scientific",
             text: "Homo (sapiens)",
@@ -46,6 +66,13 @@ describe("parseNomen()", () => {
         }, {
             class: "citation",
             text: "Linnaeus 1758",
+        }]);
+        test("Homo sapiens Linnaeus, 1758", [{
+            class: "scientific",
+            text: "Homo sapiens",
+        }, {
+            class: "citation",
+            text: "Linnaeus, 1758",
         }]);
         test("Hominidae indet.", [{
             class: "scientific",
@@ -118,6 +145,55 @@ describe("parseNomen()", () => {
         }, {
             class: "citation",
             text: "(Lehmann and Neumann 1896) van Loghem, 1944",
+        }]);
+        test("Patagotitan mayorum Carballido, Pol, Otero, Cerda, Salgado, Garrido, Ramezani, Cúneo & Krause 2017", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido, Pol, Otero, Cerda, Salgado, Garrido, Ramezani, Cúneo & Krause 2017",
+        }]);
+        test("Patagotitan mayorum Carballido & al. 2017", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido & al. 2017",
+        }]);
+        test("Patagotitan mayorum Carballido & al., 2017", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido & al., 2017",
+        }]);
+        test("Patagotitan mayorum Carballido et al., 2017", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido et al., 2017",
+        }]);
+        test("Patagotitan mayorum Carballido & al. 2017 Aug 9", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido & al. 2017 Aug 9",
+        }]);
+        test("Patagotitan mayorum Carballido & al. 9 August 2017", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido & al. 9 August 2017",
+        }]);
+        test("Patagotitan mayorum Carballido & al. August 2017", [{
+            class: "scientific",
+            text: "Patagotitan mayorum",
+        }, {
+            class: "citation",
+            text: "Carballido & al. August 2017",
         }]);
     });
 });
