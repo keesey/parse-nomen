@@ -1,4 +1,4 @@
-export enum Style {
+export enum NomenPartClass {
 	CITATION = "citation",
 	COMMENT = "comment",
 	OPERATOR = "operator",

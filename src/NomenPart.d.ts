@@ -1,5 +1,5 @@
-import { Style } from "./Style";
+import { NomenPartClass } from "./NomenPartClass";
 export interface NomenPart {
-	class: Style;
+	class: NomenPartClass;
 	text: string;
 }

@@ -19,28 +19,34 @@ function classMatches(word: string, wordClass: WordClass): boolean {
 	return wordClass.pattern.test(word) &&
 		(!wordClass.antipattern || !wordClass.antipattern.test(word));
 }
+function findMatchingWordClass(word: string, wordClassNames: ReadonlyArray<WordClassName>): WordClass | null {
+    for (const wordClassName of wordClassNames) {
+        const wordClass = WORD_CLASS_DICT[wordClassName];
+        /*
+        if (!wordClass) {
+            throw new Error(`Cannot find word class "${wordClassName}".`);
+        }
+        */
+        if (classMatches(word, wordClass)) {
+            return wordClass;
+        }
+    }
+    return null;
+}
 function process(words: string[], wordClassNames: ReadonlyArray<WordClassName>): NomenPart[] {
-	const parts: NomenPart[] = [];
 	if (words.length) {
 		const word = words.shift() as string;
 		const part: Partial<NomenPart> = {
 			text: word,
-		};
-		let next: ReadonlyArray<WordClassName> = [];
-		for (const wordClassName of wordClassNames) {
-			const wordClass = WORD_CLASS_DICT[wordClassName];
-			if (!wordClass) {
-				throw new Error(`Cannot find word class "${wordClassName}".`);
-			}
-			if (classMatches(word, wordClass)) {
-				part.class = wordClass.style;
-				next = wordClass.next;
-				break;
-			}
-		}
-		parts.push(part as NomenPart, ...process(words, next));
+        };
+        const wordClass = findMatchingWordClass(word, wordClassNames);
+        if (wordClass) {
+            part.class = wordClass.class;
+        }
+        const next: ReadonlyArray<WordClassName> = wordClass ? wordClass.next : [];
+		return [part as NomenPart, ...process(words, next)];
 	}
-	return parts;
+	return [];
 }
 export function parseNomen(s: string): NomenPart[] {
 	if (typeof s !== "string") {

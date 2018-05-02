@@ -1,0 +1,27 @@
+"use strict";
+exports.__esModule = true;
+var WordClassName;
+(function (WordClassName) {
+    WordClassName["AUTHOR"] = "author";
+    WordClassName["AUTHOR_OPERATOR"] = "authorOperator";
+    WordClassName["CITATION_OPERATOR"] = "citationOperator";
+    WordClassName["DATE"] = "date";
+    WordClassName["INCERTAE"] = "incertae";
+    WordClassName["INCERTAE_FOLLOWER"] = "incertaeFollower";
+    WordClassName["MONTH"] = "month";
+    WordClassName["OPERATOR"] = "operator";
+    WordClassName["PRAENOMEN"] = "praenomen";
+    WordClassName["PRAENOMEN_ABBR"] = "praenomenAbbr";
+    WordClassName["SPECIES"] = "species";
+    WordClassName["SPECIES_GROUP"] = "speciesGroup";
+    WordClassName["SPECIFIC_OPERATOR"] = "specificOperator";
+    WordClassName["SUBGENERIC_NAME"] = "subgenericName";
+    WordClassName["SUBGENERIC_RANK"] = "subgenericRank";
+    WordClassName["SUBGENUS"] = "subgenus";
+    WordClassName["SUBSPECIFIC_OPERATOR"] = "subspecificOperator";
+    WordClassName["SUBSPECIFIC_RANK"] = "subspecificRank";
+    WordClassName["SUBSPECIES"] = "subspecies";
+    WordClassName["SUPRAGENERIC_RANK"] = "supragenericRank";
+    WordClassName["VERNACULAR"] = "vernacular";
+    WordClassName["YEAR"] = "year";
+})(WordClassName = exports.WordClassName || (exports.WordClassName = {}));

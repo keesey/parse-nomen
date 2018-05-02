@@ -47,6 +47,34 @@ describe("parseNomen()", () => {
             class: "citation",
             text: "Linnaeus 1758",
         }]);
+        test("Hominidae indet.", [{
+            class: "scientific",
+            text: "Hominidae",
+        }, {
+            class: "comment",
+            text: "indet.",
+        }]);
+        test("Homo sapiens indet.", [{
+            class: "scientific",
+            text: "Homo sapiens",
+        }, {
+            class: "comment",
+            text: "indet.",
+        }]);
+        test("Hominidae incertae sedis", [{
+            class: "scientific",
+            text: "Hominidae",
+        }, {
+            class: "comment",
+            text: "incertae sedis",
+        }]);
+        test("Hominidae incertae mutabilis", [{
+            class: "scientific",
+            text: "Hominidae",
+        }, {
+            class: "comment",
+            text: "incertae mutabilis",
+        }]);
         test("Balæna maximus borealis Knox (of Hamilton not Lesson) 1838", [{
             class: "scientific",
             text: "Balæna maximus borealis",
