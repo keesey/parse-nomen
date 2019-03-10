@@ -1,3 +1,3 @@
-export * from "./src/NomenPart";
-export * from "./src/NomenPartClass";
-export * from "./src/parseNomen";
+export * from "./NomenPart";
+export * from "./NomenPartClass";
+export * from "./parseNomen";

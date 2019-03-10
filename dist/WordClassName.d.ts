@@ -20,5 +20,5 @@ export declare enum WordClassName {
     SUBSPECIES = "subspecies",
     SUPRAGENERIC_RANK = "supragenericRank",
     VERNACULAR = "vernacular",
-    YEAR = "year",
+    YEAR = "year"
 }

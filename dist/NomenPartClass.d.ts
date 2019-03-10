@@ -4,5 +4,5 @@ export declare enum NomenPartClass {
     OPERATOR = "operator",
     RANK = "rank",
     SCIENTIFIC = "scientific",
-    VERNACULAR = "vernacular",
+    VERNACULAR = "vernacular"
 }
