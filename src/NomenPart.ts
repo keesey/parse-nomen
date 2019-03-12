@@ -1,5 +1,5 @@
 import { NomenPartClass } from './NomenPartClass';
-export interface NomenPart {
+export declare interface NomenPart {
   class: NomenPartClass;
   text: string;
 }

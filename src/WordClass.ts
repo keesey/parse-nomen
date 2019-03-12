@@ -1,6 +1,6 @@
 import { NomenPartClass } from './NomenPartClass';
 import { WordClassName } from './WordClassName';
-export interface WordClass {
+export declare interface WordClass {
   readonly antipattern?: RegExp;
   readonly class: NomenPartClass;
   readonly next: ReadonlyArray<WordClassName>;
