@@ -1,6 +1,10 @@
 export enum WordClassName {
   AUTHOR = 'author',
   AUTHOR_OPERATOR = 'authorOperator',
+  CANDIDATE_PRAENOMEN = 'candidatePraenomen',
+  CANDIDATE_PRAENOMEN_ABBR = 'candidatePraenomenAbbr',
+  CANDIDATE_SPECIES = 'candidateSpecies',
+  CANDIDATUS = 'candidatus',
   CITATION_OPERATOR = 'citationOperator',
   DATE = 'date',
   INCERTAE = 'incertae',

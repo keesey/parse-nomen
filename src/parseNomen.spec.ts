@@ -196,5 +196,50 @@ describe('parseNomen()', () => {
             class: NomenPartClass.CITATION,
             text: 'Carballido & al. August 2017',
         }]);
+        test('Candidatus Phytoplasma', [{
+            class: NomenPartClass.COMMENT,
+            text: 'Candidatus',
+        }, {
+            class: NomenPartClass.VERNACULAR,
+            text: 'Phytoplasma',
+        }]);
+        test('Candidatus Phytoplasma allocasuarinae', [{
+            class: NomenPartClass.COMMENT,
+            text: 'Candidatus',
+        }, {
+            class: NomenPartClass.VERNACULAR,
+            text: 'Phytoplasma allocasuarinae',
+        }]);
+        test('"Candidatus   Phytoplasma allocasuarinae"   ', [{
+            class: NomenPartClass.VERNACULAR,
+            text: '"Candidatus Phytoplasma allocasuarinae"',
+        }]);
+        test('Ca. Phytoplasma allocasuarinae', [{
+            class: NomenPartClass.COMMENT,
+            text: 'Ca.',
+        }, {
+            class: NomenPartClass.VERNACULAR,
+            text: 'Phytoplasma allocasuarinae',
+        }]);
+        test('Candidatus Phytoplasma allocasuarinae 2004', [{
+            class: NomenPartClass.COMMENT,
+            text: 'Candidatus',
+        }, {
+            class: NomenPartClass.VERNACULAR,
+            text: 'Phytoplasma allocasuarinae',
+        }, {
+            class: NomenPartClass.CITATION,
+            text: '2004',
+        }]);
+        test('Ca. Phytoplasma allocasuarinae Marcone & al. 2004', [{
+            class: NomenPartClass.COMMENT,
+            text: 'Ca.',
+        }, {
+            class: NomenPartClass.VERNACULAR,
+            text: 'Phytoplasma allocasuarinae',
+        }, {
+            class: NomenPartClass.CITATION,
+            text: 'Marcone & al. 2004',
+        }]);
     });
 });

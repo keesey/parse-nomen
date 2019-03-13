@@ -62,8 +62,8 @@
         "prepublishOnly": "yarn test && yarn lint",
         "preversion": "yarn lint",
         "test": "mocha -r ts-node/register \"./src/**/*.spec.ts\"",
-        "version": "yarn lint-fix && git add -A src"
+        "version": "yarn lint-fix && git add -A ."
     },
     "types": "dist/index.d.ts",
-    "version": "1.2.1"
+    "version": "1.3.0"
 }

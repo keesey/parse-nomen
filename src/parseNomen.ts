@@ -54,8 +54,14 @@ export function parseNomen(s: string): NomenPart[] {
   if (typeof s !== 'string') {
     throw new Error('Not a string.');
   }
+  s = s.trim();
+  if (/^".*"$/.test(s)) {
+    return [{
+      class: NomenPartClass.VERNACULAR,
+      text: s.replace(/\s+/g, ' '),
+    }];
+  }
   const words = s
-    .trim()
     .split(/\s+/g)
     .filter(Boolean);
   return condense(process(words, INITIAL_WORD_CLASSES));

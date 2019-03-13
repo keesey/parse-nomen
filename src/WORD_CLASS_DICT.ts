@@ -21,6 +21,8 @@ const PRIMARY_OPERATORS = [
   WordClassName.CITATION_OPERATOR,
   WordClassName.INCERTAE,
 ];
+const SPECIES_ANTIPATTERN = /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/;
+const SUPRAGENERIC_ABBR_REGEX = /^[A-ZÀ-ÖØ-ÞŒ]\.$/;
 export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
   [WordClassName.AUTHOR]: {
     antipattern: /^(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?$/i,
@@ -41,6 +43,38 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
       WordClassName.AUTHOR,
     ],
     pattern: /^(&|and|et)$/i,
+  },
+  [WordClassName.CANDIDATE_PRAENOMEN]: {
+    class: NomenPartClass.VERNACULAR,
+    next: [
+      WordClassName.CANDIDATE_SPECIES,
+      WordClassName.AUTHOR,
+    ],
+    pattern: SUPRAGENERIC_NAME_REGEX,
+  },
+  [WordClassName.CANDIDATE_PRAENOMEN_ABBR]: {
+    class: NomenPartClass.VERNACULAR,
+    next: POST_GENUS_CLASSES,
+    pattern: SUPRAGENERIC_ABBR_REGEX,
+  },
+  [WordClassName.CANDIDATE_SPECIES]: {
+    antipattern: SPECIES_ANTIPATTERN,
+    class: NomenPartClass.VERNACULAR,
+    next: [
+      ...DATE_CLASSES,
+      WordClassName.AUTHOR,
+      WordClassName.VERNACULAR,
+    ],
+    pattern: /^[a-zß-öø-ÿœ]+\-?[a-zß-öø-ÿœ]+$/,
+  },
+  [WordClassName.CANDIDATUS]: {
+    class: NomenPartClass.COMMENT,
+    next: [
+      WordClassName.CANDIDATE_PRAENOMEN,
+      WordClassName.CANDIDATE_PRAENOMEN_ABBR,
+      WordClassName.VERNACULAR,
+    ],
+    pattern: /^"?ca(ndidatus|.)$/i,
   },
   [WordClassName.CITATION_OPERATOR]: {
     class: NomenPartClass.CITATION,
@@ -110,10 +144,10 @@ export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
   [WordClassName.PRAENOMEN_ABBR]: {
     class: NomenPartClass.SCIENTIFIC,
     next: POST_GENUS_CLASSES,
-    pattern: /^[A-ZÀ-ÖØ-ÞŒ]\.$/,
+    pattern: SUPRAGENERIC_ABBR_REGEX,
   },
   [WordClassName.SPECIES]: {
-    antipattern: /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/,
+    antipattern: SPECIES_ANTIPATTERN,
     class: NomenPartClass.SCIENTIFIC,
     next: [
       ...PRIMARY_OPERATORS,
