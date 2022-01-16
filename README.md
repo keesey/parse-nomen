@@ -2,7 +2,7 @@
 
 A [Node.js](https://nodejs.org) module for parsing biological names.
 
-## Installation 
+## Installation
 
 ### npm
 
@@ -25,13 +25,13 @@ yarn add parse-nomen
 To import in JavaScript:
 
 ```javascript
-const { parseNomen } = require("parse-nomen");
+const { parseNomen } = require("parse-nomen")
 ```
 
 To import in TypeScript:
 
 ```typescript
-import { parseNomen } from "parse-nomen";
+import { parseNomen } from "parse-nomen"
 ```
 
 #### Example Usage
@@ -40,25 +40,27 @@ import { parseNomen } from "parse-nomen";
 
 ```javascript
 // Parsing
-console.log(JSON.stringify(parseNomen('Homo')));
-console.log(JSON.stringify(parseNomen('Homo sapiens')));
-console.log(JSON.stringify(parseNomen('Homo sapiens Linnaeus 1758')));
-console.log(JSON.stringify(parseNomen('Balæna maximus borealis Knox (of Hamilton not Lesson) 1838')));
-console.log(JSON.stringify(parseNomen('Homo sapiens + Praeanthropus afarensis')));
-console.log(JSON.stringify(parseNomen('Homonœa fornicata NEWMAN Edward, 1842')));
-console.log(JSON.stringify(parseNomen('Yersinia pestis (Lehmann and Neumann 1896) van Loghem, 1944')));
-console.log(JSON.stringify(parseNomen('Herpestes fuscus ssp. fuscus Waterhouse, 1838')));
+console.log(JSON.stringify(parseNomen("Homo")))
+console.log(JSON.stringify(parseNomen("Homo sapiens")))
+console.log(JSON.stringify(parseNomen("Homo sapiens Linnaeus 1758")))
+console.log(JSON.stringify(parseNomen("Balæna maximus borealis Knox (of Hamilton not Lesson) 1838")))
+console.log(JSON.stringify(parseNomen("Homo sapiens + Praeanthropus afarensis")))
+console.log(JSON.stringify(parseNomen("Homonœa fornicata NEWMAN Edward, 1842")))
+console.log(JSON.stringify(parseNomen("Yersinia pestis (Lehmann and Neumann 1896) van Loghem, 1944")))
+console.log(JSON.stringify(parseNomen("Herpestes fuscus ssp. fuscus Waterhouse, 1838")))
 // Getting just the scientific part of the name.
-console.log(parseNomen('Herpestes fuscus ssp. fuscus Waterhouse, 1838')
-  .filter(part => part.class === 'scientific')
-  .map(part => part.text)
-  .join(' ')
-);
+console.log(
+    parseNomen("Herpestes fuscus ssp. fuscus Waterhouse, 1838")
+        .filter(part => part.class === "scientific")
+        .map(part => part.text)
+        .join(" "),
+)
 // Converting to HTML.
-console.log(parseNomen('Homo sapiens Linnaeus 1758')
-  .map(part => `<span class="${part.class}">${part.text}</span>`)
-  .join(' ')
-);
+console.log(
+    parseNomen("Homo sapiens Linnaeus 1758")
+        .map(part => `<span class="${part.class}">${part.text}</span>`)
+        .join(" "),
+)
 ```
 
 Output:
@@ -77,6 +79,7 @@ Output:
 ```
 
 ## Testing
+
 ```sh
 yarn test
 ```
