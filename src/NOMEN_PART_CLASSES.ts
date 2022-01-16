@@ -1,5 +1,5 @@
 import { NomenPartClass } from "./NomenPartClass"
-const NOMEN_PART_CLASSES: readonly NomenPartClass[] = [
+export const NOMEN_PART_CLASSES: readonly NomenPartClass[] = [
     "citation",
     "comment",
     "operator",
@@ -7,4 +7,3 @@ const NOMEN_PART_CLASSES: readonly NomenPartClass[] = [
     "scientific",
     "vernacular",
 ]
-export default NOMEN_PART_CLASSES
