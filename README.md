@@ -23,13 +23,14 @@ yarn add parse-nomen
 To import in JavaScript:
 
 ```javascript
-const { parseNomen } = require("parse-nomen")
+const { parseNomen, NOMEN_PART_CLASSES } = require("parse-nomen")
 ```
 
 To import in TypeScript:
 
 ```typescript
-import { parseNomen } from "parse-nomen"
+import { parseNomen, NOMEN_PART_CLASSES } from "parse-nomen"
+import type { NomenPart, NomenPartClass } from "parse-nomen"
 ```
 
 ### Example Usage
@@ -37,6 +38,8 @@ import { parseNomen } from "parse-nomen"
 (JavaScript or TypeScript, after importing the function)
 
 ```javascript
+// List all nomen part classes.
+console.log(JSON.stringify(NOMEN_PART_CLASSES))
 // Parsing
 console.log(JSON.stringify(parseNomen("Homo")))
 console.log(JSON.stringify(parseNomen("Homo sapiens")))
@@ -64,6 +67,7 @@ console.log(
 Output:
 
 ```sh
+> ["citation","comment","operator","rank","scientific","vernacular"]
 > [{"text":"Homo","class":"scientific"}]
 > [{"text":"Homo sapiens","class":"scientific"}]
 > [{"text":"Homo sapiens","class":"scientific"},{"text":"Linnaeus 1758","class":"citation"}]
