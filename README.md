@@ -18,9 +18,7 @@ yarn add parse-nomen
 
 ## Usage
 
-### JavaScript and TypeScript
-
-#### Importing
+### Importing
 
 To import in JavaScript:
 
@@ -34,7 +32,7 @@ To import in TypeScript:
 import { parseNomen } from "parse-nomen"
 ```
 
-#### Example Usage
+### Example Usage
 
 (JavaScript or TypeScript, after importing the function)
 

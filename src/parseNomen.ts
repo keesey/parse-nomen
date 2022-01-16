@@ -3,7 +3,7 @@ import { NomenPart } from "./NomenPart"
 import { WordClass } from "./WordClass"
 import { WordClassName } from "./WordClassName"
 import { WORD_CLASS_DICT } from "./WORD_CLASS_DICT"
-function condense(parts: NomenPart[]): NomenPart[] {
+function condense(parts: readonly NomenPart[]): readonly NomenPart[] {
     const condensed: NomenPart[] = []
     let last: NomenPart | undefined
     for (const current of parts) {
@@ -27,7 +27,11 @@ function findMatchingWordClass(word: string, wordClassNames: readonly WordClassN
     }
     return null
 }
-function process(words: string[], wordClassNames: readonly WordClassName[], lastClass?: WordClass | null): NomenPart[] {
+function process(
+    words: string[],
+    wordClassNames: readonly WordClassName[],
+    lastClass?: WordClass | null,
+): readonly NomenPart[] {
     if (words.length) {
         const word = words.shift() as string
         const part: Partial<NomenPart> = {
@@ -44,7 +48,7 @@ function process(words: string[], wordClassNames: readonly WordClassName[], last
     }
     return []
 }
-export function parseNomen(s: string): NomenPart[] {
+export function parseNomen(s: string): readonly NomenPart[] {
     if (typeof s !== "string") {
         throw new Error("Not a string.")
     }
