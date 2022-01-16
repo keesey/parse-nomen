@@ -1,209 +1,156 @@
-import { NomenPartClass } from "./NomenPartClass"
 import { SUPRAGENERIC_NAME_REGEX } from "./SUPRAGENERIC_NAME_REGEX"
 import { WordClass } from "./WordClass"
 import { WordClassName } from "./WordClassName"
-const DATE_CLASSES = [WordClassName.YEAR, WordClassName.MONTH, WordClassName.DATE]
-const POST_SUBGENUS_CLASSES = [WordClassName.SPECIES, WordClassName.SPECIES_GROUP]
-const POST_GENUS_CLASSES = [...POST_SUBGENUS_CLASSES, WordClassName.SUBGENUS]
-const PRIMARY_OPERATORS = [WordClassName.OPERATOR, WordClassName.CITATION_OPERATOR, WordClassName.INCERTAE]
+const DATE_CLASSES: readonly WordClassName[] = ["year", "month", "date"]
+const POST_SUBGENUS_CLASSES: readonly WordClassName[] = ["species", "speciesGroup"]
+const POST_GENUS_CLASSES: readonly WordClassName[] = [...POST_SUBGENUS_CLASSES, "subgenus"]
+const PRIMARY_OPERATORS: readonly WordClassName[] = ["operator", "citationOperator", "incertae"]
 const SPECIES_ANTIPATTERN =
     /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/
 const SUPRAGENERIC_ABBR_REGEX = /^[A-ZÀ-ÖØ-ÞŒ]\.$/
 export const WORD_CLASS_DICT: Readonly<Record<WordClassName, WordClass>> = {
-    [WordClassName.AUTHOR]: {
+    author: {
         antipattern: /^(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?$/i,
-        class: NomenPartClass.CITATION,
-        next: [
-            WordClassName.AUTHOR_OPERATOR,
-            WordClassName.CITATION_OPERATOR,
-            WordClassName.SUBSPECIFIC_RANK,
-            WordClassName.INCERTAE,
-            ...DATE_CLASSES,
-            WordClassName.AUTHOR,
-        ],
+        class: "citation",
+        next: ["authorOperator", "citationOperator", "subspecificRank", "incertae", ...DATE_CLASSES, "author"],
         pattern: /^[([{]?[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ"!*]/,
     },
-    [WordClassName.AUTHOR_OPERATOR]: {
-        class: NomenPartClass.CITATION,
-        next: [WordClassName.AUTHOR],
+    authorOperator: {
+        class: "citation",
+        next: ["author"],
         pattern: /^(&|and|et)$/i,
     },
-    [WordClassName.CANDIDATE_PRAENOMEN]: {
-        class: NomenPartClass.VERNACULAR,
-        next: [WordClassName.CANDIDATE_SPECIES, WordClassName.AUTHOR],
+    candidatePraenomen: {
+        class: "vernacular",
+        next: ["candidateSpecies", "author"],
         pattern: SUPRAGENERIC_NAME_REGEX,
     },
-    [WordClassName.CANDIDATE_PRAENOMEN_ABBR]: {
-        class: NomenPartClass.VERNACULAR,
+    candidatePraenomenAbbr: {
+        class: "vernacular",
         next: POST_GENUS_CLASSES,
         pattern: SUPRAGENERIC_ABBR_REGEX,
     },
-    [WordClassName.CANDIDATE_SPECIES]: {
+    candidateSpecies: {
         antipattern: SPECIES_ANTIPATTERN,
-        class: NomenPartClass.VERNACULAR,
-        next: [...DATE_CLASSES, WordClassName.AUTHOR, WordClassName.VERNACULAR],
+        class: "vernacular",
+        next: [...DATE_CLASSES, "author", "vernacular"],
         pattern: /^[a-zß-öø-ÿœ]+-?[a-zß-öø-ÿœ]+$/,
     },
-    [WordClassName.CANDIDATUS]: {
-        class: NomenPartClass.COMMENT,
-        next: [WordClassName.CANDIDATE_PRAENOMEN, WordClassName.CANDIDATE_PRAENOMEN_ABBR, WordClassName.VERNACULAR],
+    candidatus: {
+        class: "comment",
+        next: ["candidatePraenomen", "candidatePraenomenAbbr", "vernacular"],
         pattern: /^"?ca(ndidatus|.)$/i,
     },
-    [WordClassName.CITATION_OPERATOR]: {
-        class: NomenPartClass.CITATION,
-        next: [WordClassName.AUTHOR, ...DATE_CLASSES],
+    citationOperator: {
+        class: "citation",
+        next: ["author", ...DATE_CLASSES],
         pattern: /^(ex|in|vide|non)$/i,
     },
-    [WordClassName.DATE]: {
-        class: NomenPartClass.CITATION,
-        next: [
-            WordClassName.MONTH,
-            WordClassName.YEAR,
-            ...PRIMARY_OPERATORS,
-            WordClassName.SUBSPECIFIC_RANK,
-            WordClassName.AUTHOR,
-        ],
+    date: {
+        class: "citation",
+        next: ["month", "year", ...PRIMARY_OPERATORS, "subspecificRank", "author"],
         pattern: /^[([{]?\d\d?[)\]}]?\.?$/i,
     },
-    [WordClassName.INCERTAE]: {
-        class: NomenPartClass.COMMENT,
-        next: [WordClassName.INCERTAE_FOLLOWER],
+    incertae: {
+        class: "comment",
+        next: ["incertaeFollower"],
         pattern: /^incertae|indet\.?$/i,
     },
-    [WordClassName.INCERTAE_FOLLOWER]: {
-        class: NomenPartClass.COMMENT,
-        next: [WordClassName.INCERTAE_FOLLOWER],
+    incertaeFollower: {
+        class: "comment",
+        next: ["incertaeFollower"],
         pattern: /^.+$/,
     },
-    [WordClassName.MONTH]: {
-        class: NomenPartClass.CITATION,
-        next: [
-            WordClassName.DATE,
-            WordClassName.YEAR,
-            WordClassName.CITATION_OPERATOR,
-            WordClassName.INCERTAE,
-            WordClassName.SUBSPECIFIC_RANK,
-            WordClassName.AUTHOR,
-        ],
+    month: {
+        class: "citation",
+        next: ["date", "year", "citationOperator", "incertae", "subspecificRank", "author"],
         pattern:
             /^\(?(Jan(\.|uary)?|Feb(\.|ruary)?|Mar(\.|ch)?|Apr(\.|il)?|May|Jun(\.|e)?|Jul(\.|y)?|Aug(\.|ust)?|Sep(\.|t(\.)?|ember)?|Oct(\.|ober)?|Nov(\.|ember?)|Dec(\.|ember)?)$/i,
     },
-    [WordClassName.OPERATOR]: {
-        class: NomenPartClass.OPERATOR,
-        next: [WordClassName.PRAENOMEN, WordClassName.PRAENOMEN_ABBR],
+    operator: {
+        class: "operator",
+        next: ["praenomen", "praenomenAbbr"],
         pattern: /^(\+|←)$/,
     },
-    [WordClassName.PRAENOMEN]: {
-        class: NomenPartClass.SCIENTIFIC,
+    praenomen: {
+        class: "scientific",
         next: [
             ...PRIMARY_OPERATORS,
-            WordClassName.SUPRAGENERIC_RANK,
-            WordClassName.SUBGENERIC_RANK,
-            WordClassName.SPECIFIC_OPERATOR,
+            "supragenericRank",
+            "subgenericRank",
+            "specificOperator",
             ...POST_GENUS_CLASSES,
-            WordClassName.AUTHOR,
+            "author",
         ],
         pattern: SUPRAGENERIC_NAME_REGEX,
     },
-    [WordClassName.PRAENOMEN_ABBR]: {
-        class: NomenPartClass.SCIENTIFIC,
+    praenomenAbbr: {
+        class: "scientific",
         next: POST_GENUS_CLASSES,
         pattern: SUPRAGENERIC_ABBR_REGEX,
     },
-    [WordClassName.SPECIES]: {
+    species: {
         antipattern: SPECIES_ANTIPATTERN,
-        class: NomenPartClass.SCIENTIFIC,
-        next: [
-            ...PRIMARY_OPERATORS,
-            ...DATE_CLASSES,
-            WordClassName.SUBSPECIES,
-            WordClassName.SUBSPECIFIC_OPERATOR,
-            WordClassName.SUBSPECIFIC_RANK,
-            WordClassName.AUTHOR,
-        ],
+        class: "scientific",
+        next: [...PRIMARY_OPERATORS, ...DATE_CLASSES, "subspecies", "subspecificOperator", "subspecificRank", "author"],
         pattern: /^(sp\.(\s+innom\.)?|[a-zß-öø-ÿœ]+-?[a-zß-öø-ÿœ]+)$/,
     },
-    [WordClassName.SPECIES_GROUP]: {
-        class: NomenPartClass.SCIENTIFIC,
-        next: [
-            ...PRIMARY_OPERATORS,
-            ...DATE_CLASSES,
-            WordClassName.SPECIES,
-            WordClassName.SPECIFIC_OPERATOR,
-            WordClassName.AUTHOR,
-        ],
+    speciesGroup: {
+        class: "scientific",
+        next: [...PRIMARY_OPERATORS, ...DATE_CLASSES, "species", "specificOperator", "author"],
         pattern: /^\([a-zß-öø-ÿœ]+-?[a-zß-öø-ÿœ]+\)$/,
     },
-    [WordClassName.SPECIFIC_OPERATOR]: {
-        class: NomenPartClass.COMMENT,
-        next: [WordClassName.SPECIES],
+    specificOperator: {
+        class: "comment",
+        next: ["species"],
         pattern: /^(cf\.|aff\.)$/,
     },
-    [WordClassName.SUBGENERIC_NAME]: {
-        class: NomenPartClass.SCIENTIFIC,
-        next: [
-            ...DATE_CLASSES,
-            WordClassName.CITATION_OPERATOR,
-            WordClassName.INCERTAE,
-            ...POST_SUBGENUS_CLASSES,
-            WordClassName.SPECIFIC_OPERATOR,
-            WordClassName.AUTHOR,
-        ],
+    subgenericName: {
+        class: "scientific",
+        next: [...DATE_CLASSES, "citationOperator", "incertae", ...POST_SUBGENUS_CLASSES, "specificOperator", "author"],
         pattern: SUPRAGENERIC_NAME_REGEX,
     },
-    [WordClassName.SUBGENERIC_RANK]: {
-        class: NomenPartClass.RANK,
-        next: [WordClassName.SUBGENERIC_NAME],
+    subgenericRank: {
+        class: "rank",
+        next: ["subgenericName"],
         pattern: /^(\[\()?(subg(\.|en(\.|us)?)?|(sub)?sect(\.|ion?)?|(sub)?ser(\.|ies)?)(\]\))?$/i,
     },
-    [WordClassName.SUBGENUS]: {
-        class: NomenPartClass.SCIENTIFIC,
-        next: [
-            ...PRIMARY_OPERATORS,
-            ...DATE_CLASSES,
-            ...POST_SUBGENUS_CLASSES,
-            WordClassName.SPECIFIC_OPERATOR,
-            WordClassName.AUTHOR,
-        ],
+    subgenus: {
+        class: "scientific",
+        next: [...PRIMARY_OPERATORS, ...DATE_CLASSES, ...POST_SUBGENUS_CLASSES, "specificOperator", "author"],
         pattern: /^\([A-ZÀ-ÖØ-ÞŒ][a-zß-öø-ÿœ]*(-[A-ZÀ-ÖØ-ÞŒa-zß-öø-ÿœ])?[a-zß-öø-ÿœ]+\)$/,
     },
-    [WordClassName.SUBSPECIES]: {
+    subspecies: {
         antipattern:
             /^(da|de|du|la|van|von|(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?)$/,
-        class: NomenPartClass.SCIENTIFIC,
-        next: [...PRIMARY_OPERATORS, WordClassName.SUBSPECIFIC_RANK, ...DATE_CLASSES, WordClassName.AUTHOR],
+        class: "scientific",
+        next: [...PRIMARY_OPERATORS, "subspecificRank", ...DATE_CLASSES, "author"],
         pattern: /^(ssp\.(\s+innom\.)?|[a-zß-öø-ÿœ]+-?[a-zß-öø-ÿœ]+)$/,
     },
-    [WordClassName.SUBSPECIFIC_OPERATOR]: {
-        class: NomenPartClass.COMMENT,
-        next: [WordClassName.SUBSPECIES],
+    subspecificOperator: {
+        class: "comment",
+        next: ["subspecies"],
         pattern: /^(cf\.|aff\.)$/,
     },
-    [WordClassName.SUBSPECIFIC_RANK]: {
-        class: NomenPartClass.RANK,
-        next: [WordClassName.SUBSPECIES],
+    subspecificRank: {
+        class: "rank",
+        next: ["subspecies"],
         pattern: /^(\[\()?(subsp(\.|ecies)?|ssp\.?|(sub)?fo(\.|rm(\.|a)?)?|(sub|con)?var(\.|iet(y|as))?)(\]\))?$/i,
     },
-    [WordClassName.SUPRAGENERIC_RANK]: {
-        class: NomenPartClass.RANK,
-        next: [...DATE_CLASSES, WordClassName.INCERTAE, WordClassName.AUTHOR],
+    supragenericRank: {
+        class: "rank",
+        next: [...DATE_CLASSES, "incertae", "author"],
         pattern:
             /^(\[\()?((sub|sup(ra|er)|infra)?phyl(\.|um)|(sub|sup(ra|er)|infra)?div(\.|ision)|(sub|sup(ra|er)|infra)?cl(\.|ass(is)?)|(sub|sup(ra|er)|infra)?ord(\.|o|er)|(sub|sup(ra|er))?fam(\.|il(ia|y))|(sub)?tr(\.|ib(e|us))|gen(\.|us))(\]\))?$/i,
     },
-    [WordClassName.VERNACULAR]: {
-        class: NomenPartClass.VERNACULAR,
-        next: [WordClassName.VERNACULAR],
+    vernacular: {
+        class: "vernacular",
+        next: ["vernacular"],
         pattern: /^.+$/i,
     },
-    [WordClassName.YEAR]: {
-        class: NomenPartClass.CITATION,
-        next: [
-            WordClassName.MONTH,
-            ...PRIMARY_OPERATORS,
-            WordClassName.SUBSPECIFIC_RANK,
-            WordClassName.SUBGENERIC_RANK,
-            WordClassName.AUTHOR,
-        ],
+    year: {
+        class: "citation",
+        next: ["month", ...PRIMARY_OPERATORS, "subspecificRank", "subgenericRank", "author"],
         pattern: /^[([{]?\d{4}[)\]}]?\.?$/i,
     },
 }

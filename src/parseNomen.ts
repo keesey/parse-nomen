@@ -1,9 +1,8 @@
 import { INITIAL_WORD_CLASSES } from "./INITIAL_WORD_CLASSES"
 import { NomenPart } from "./NomenPart"
-import { NomenPartClass } from "./NomenPartClass"
-import { WORD_CLASS_DICT } from "./WORD_CLASS_DICT"
 import { WordClass } from "./WordClass"
 import { WordClassName } from "./WordClassName"
+import { WORD_CLASS_DICT } from "./WORD_CLASS_DICT"
 function condense(parts: NomenPart[]): NomenPart[] {
     const condensed: NomenPart[] = []
     let last: NomenPart | undefined
@@ -19,7 +18,7 @@ function condense(parts: NomenPart[]): NomenPart[] {
 function classMatches(word: string, wordClass: WordClass): boolean {
     return wordClass.pattern.test(word) && (!wordClass.antipattern || !wordClass.antipattern.test(word))
 }
-function findMatchingWordClass(word: string, wordClassNames: ReadonlyArray<WordClassName>): WordClass | null {
+function findMatchingWordClass(word: string, wordClassNames: readonly WordClassName[]): WordClass | null {
     for (const wordClassName of wordClassNames) {
         const wordClass = WORD_CLASS_DICT[wordClassName]
         if (classMatches(word, wordClass)) {
@@ -28,11 +27,7 @@ function findMatchingWordClass(word: string, wordClassNames: ReadonlyArray<WordC
     }
     return null
 }
-function process(
-    words: string[],
-    wordClassNames: ReadonlyArray<WordClassName>,
-    lastClass?: WordClass | null,
-): NomenPart[] {
+function process(words: string[], wordClassNames: readonly WordClassName[], lastClass?: WordClass | null): NomenPart[] {
     if (words.length) {
         const word = words.shift() as string
         const part: Partial<NomenPart> = {
@@ -42,9 +37,9 @@ function process(
         if (wordClass) {
             part.class = wordClass.class
         } else {
-            part.class = lastClass ? lastClass.class : NomenPartClass.COMMENT
+            part.class = lastClass ? lastClass.class : "comment"
         }
-        const next: ReadonlyArray<WordClassName> = wordClass ? wordClass.next : []
+        const next = wordClass ? wordClass.next : []
         return [part as NomenPart, ...process(words, next, wordClass)]
     }
     return []
@@ -57,7 +52,7 @@ export function parseNomen(s: string): NomenPart[] {
     if (/^".*"$/.test(s)) {
         return [
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: s.replace(/\s+/g, " "),
             },
         ]

@@ -1,6 +1,5 @@
 import { expect } from "chai"
 import { NomenPart } from "./NomenPart"
-import { NomenPartClass } from "./NomenPartClass"
 import { parseNomen } from "./parseNomen"
 function test(nomen: string, expectedParts: NomenPart[]) {
     it(`should parse "${nomen}" as expected`, () => {
@@ -23,315 +22,315 @@ describe("parseNomen()", () => {
         test("", [])
         test("Homo", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo",
             },
         ])
         test("Homo (Homo)", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo (Homo)",
             },
         ])
         test("Homo subgenus Homo", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo",
             },
             {
-                class: NomenPartClass.RANK,
+                class: "rank",
                 text: "subgenus",
             },
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo",
             },
         ])
         test("Homo subg. Homo", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo",
             },
             {
-                class: NomenPartClass.RANK,
+                class: "rank",
                 text: "subg.",
             },
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo",
             },
         ])
         test("Homo (sapiens)", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo (sapiens)",
             },
         ])
         test("Homo sapiens", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo sapiens",
             },
         ])
         test("Homo sapiens sapiens", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo sapiens sapiens",
             },
         ])
         test("Homo sapiens Linnaeus 1758", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo sapiens",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Linnaeus 1758",
             },
         ])
         test("Homo sapiens Linnaeus, 1758", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo sapiens",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Linnaeus, 1758",
             },
         ])
         test("Hominidae indet.", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Hominidae",
             },
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "indet.",
             },
         ])
         test("Homo sapiens indet.", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo sapiens",
             },
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "indet.",
             },
         ])
         test("Hominidae incertae sedis", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Hominidae",
             },
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "incertae sedis",
             },
         ])
         test("Hominidae incertae mutabilis", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Hominidae",
             },
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "incertae mutabilis",
             },
         ])
         test("Balæna maximus borealis Knox (of Hamilton not Lesson) 1838", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Balæna maximus borealis",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Knox (of Hamilton not Lesson) 1838",
             },
         ])
         test("Homo sapiens + Praeanthropus afarensis", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homo sapiens",
             },
             {
-                class: NomenPartClass.OPERATOR,
+                class: "operator",
                 text: "+",
             },
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Praeanthropus afarensis",
             },
         ])
         test("Herpestes fuscus ssp. fuscus Waterhouse, 1838", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Herpestes fuscus",
             },
             {
-                class: NomenPartClass.RANK,
+                class: "rank",
                 text: "ssp.",
             },
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "fuscus",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Waterhouse, 1838",
             },
         ])
         test("Homonœa fornicata NEWMAN Edward, 1842", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Homonœa fornicata",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "NEWMAN Edward, 1842",
             },
         ])
         test("Yersinia pestis (Lehmann and Neumann 1896) van Loghem, 1944", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Yersinia pestis",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "(Lehmann and Neumann 1896) van Loghem, 1944",
             },
         ])
         test("Patagotitan mayorum Carballido, Pol, Otero, Cerda, Salgado, Garrido, Ramezani, Cúneo & Krause 2017", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido, Pol, Otero, Cerda, Salgado, Garrido, Ramezani, Cúneo & Krause 2017",
             },
         ])
         test("Patagotitan mayorum Carballido & al. 2017", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido & al. 2017",
             },
         ])
         test("Patagotitan mayorum Carballido & al., 2017", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido & al., 2017",
             },
         ])
         test("Patagotitan mayorum Carballido et al., 2017", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido et al., 2017",
             },
         ])
         test("Patagotitan mayorum Carballido & al. 2017 Aug 9", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido & al. 2017 Aug 9",
             },
         ])
         test("Patagotitan mayorum Carballido & al. 9 August 2017", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido & al. 9 August 2017",
             },
         ])
         test("Patagotitan mayorum Carballido & al. August 2017", [
             {
-                class: NomenPartClass.SCIENTIFIC,
+                class: "scientific",
                 text: "Patagotitan mayorum",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Carballido & al. August 2017",
             },
         ])
         test("Candidatus Phytoplasma", [
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "Candidatus",
             },
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: "Phytoplasma",
             },
         ])
         test("Candidatus Phytoplasma allocasuarinae", [
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "Candidatus",
             },
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: "Phytoplasma allocasuarinae",
             },
         ])
         test('"Candidatus   Phytoplasma allocasuarinae"   ', [
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: '"Candidatus Phytoplasma allocasuarinae"',
             },
         ])
         test("Ca. Phytoplasma allocasuarinae", [
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "Ca.",
             },
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: "Phytoplasma allocasuarinae",
             },
         ])
         test("Candidatus Phytoplasma allocasuarinae 2004", [
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "Candidatus",
             },
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: "Phytoplasma allocasuarinae",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "2004",
             },
         ])
         test("Ca. Phytoplasma allocasuarinae Marcone & al. 2004", [
             {
-                class: NomenPartClass.COMMENT,
+                class: "comment",
                 text: "Ca.",
             },
             {
-                class: NomenPartClass.VERNACULAR,
+                class: "vernacular",
                 text: "Phytoplasma allocasuarinae",
             },
             {
-                class: NomenPartClass.CITATION,
+                class: "citation",
                 text: "Marcone & al. 2004",
             },
         ])
